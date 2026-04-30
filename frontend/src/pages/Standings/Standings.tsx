@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import "./Standings.css";
-import { supabase } from "../../supabaseClient";
 import { useAuth } from "../../context/AuthContext";
-
 
 type Profile = {
   id: string;
   society_name: string;
-  total_equity: number;
   realized_pnl: number;
   initial_capital: number;
   competition_score: number;
@@ -18,6 +15,118 @@ type Profile = {
   activity_score: number;
 };
 
+const HARDCODED_STANDINGS: Profile[] = [
+  {
+    id: "1",
+    society_name: "International University of Monaco Finance Society",
+    competition_score: 82,
+    return_score: 91,
+    risk_score: 73,
+    consistency_score: 72,
+    activity_score: 73,
+    realized_pnl: 13580.21,
+    initial_capital: 100000,
+  },
+  {
+    id: "2",
+    society_name: "Irish Student Managed Fund",
+    competition_score: 70,
+    return_score: 76,
+    risk_score: 63,
+    consistency_score: 64,
+    activity_score: 65,
+    realized_pnl: 8776.71,
+    initial_capital: 100000,
+  },
+  {
+    id: "3",
+    society_name: "Marshall Finance Group",
+    competition_score: 63,
+    return_score: 64,
+    risk_score: 69,
+    consistency_score: 46,
+    activity_score: 72,
+    realized_pnl: 4565.23,
+    initial_capital: 100000,
+  },
+  {
+    id: "4",
+    society_name: "University of Birmingham Investment & Finance Society",
+    competition_score: 56,
+    return_score: 53,
+    risk_score: 50,
+    consistency_score: 72,
+    activity_score: 58,
+    realized_pnl: 1117.11,
+    initial_capital: 100000,
+  },
+  {
+    id: "5",
+    society_name: "University of Southampton Trading & Investment Society",
+    competition_score: 51,
+    return_score: 55,
+    risk_score: 28,
+    consistency_score: 67,
+    activity_score: 65,
+    realized_pnl: 1611.94,
+    initial_capital: 100000,
+  },
+  {
+    id: "6",
+    society_name: "Warwick Trading Society",
+    competition_score: 50,
+    return_score: 52,
+    risk_score: 35,
+    consistency_score: 57,
+    activity_score: 65,
+    realized_pnl: 731.52,
+    initial_capital: 100000,
+  },
+  {
+    id: "7",
+    society_name: "ESSCA Finance Society",
+    competition_score: 49,
+    return_score: 48,
+    risk_score: 43,
+    consistency_score: 61,
+    activity_score: 54,
+    realized_pnl: -308.2,
+    initial_capital: 100000,
+  },
+  {
+    id: "8",
+    society_name: "University College Cork Student Managed Fund",
+    competition_score: 44,
+    return_score: 47,
+    risk_score: 46,
+    consistency_score: 46,
+    activity_score: 24,
+    realized_pnl: -463.0,
+    initial_capital: 100000,
+  },
+  {
+    id: "9",
+    society_name: "National College of Ireland (NCI)",
+    competition_score: 44,
+    return_score: 49,
+    risk_score: 24,
+    consistency_score: 47,
+    activity_score: 68,
+    realized_pnl: -199.75,
+    initial_capital: 100000,
+  },
+  {
+    id: "10",
+    society_name: "University of Galway Student Managed Fund",
+    competition_score: 40,
+    return_score: 34,
+    risk_score: 30,
+    consistency_score: 56,
+    activity_score: 69,
+    realized_pnl: -2585.04,
+    initial_capital: 100000,
+  },
+];
 
 export default function Standings() {
   const { session } = useAuth();
@@ -25,20 +134,18 @@ export default function Standings() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-
   const sortProfiles = useCallback((profileList: Profile[]) => {
     return [...profileList].sort((a, b) => {
       const scoreA = a.competition_score || 0;
       const scoreB = b.competition_score || 0;
-      
+
       if (scoreB !== scoreA) {
         return scoreB - scoreA;
       }
-      
+
       return (b.realized_pnl || 0) - (a.realized_pnl || 0);
     });
   }, []);
-
 
   const fetchStandings = useCallback(async () => {
     if (profiles.length === 0) {
@@ -46,142 +153,46 @@ export default function Standings() {
     }
     setError(null);
 
-
-    try {
-      const { data, error: fetchError } = await supabase
-        .from("profiles")
-        .select(`
-          id,
-          society_name,
-          total_equity,
-          realized_pnl,
-          initial_capital,
-          competition_score,
-          return_score,
-          risk_score,
-          consistency_score,
-          activity_score
-        `)
-        .neq('society_name', 'Test Account (not competing)');
-
-
-      if (fetchError) throw fetchError;
-
-
-      const sortedProfiles = sortProfiles(data || []);
+    // Simulate fetch with hardcoded data
+    setTimeout(() => {
+      const sortedProfiles = sortProfiles(HARDCODED_STANDINGS);
       setProfiles(sortedProfiles);
-    } catch (err: any) {
-      console.error("Error fetching standings:", err);
-      setError(err?.message || "Failed to load standings");
-    } finally {
+
       if (profiles.length === 0) {
         setLoading(false);
       }
-    }
+    }, 100);
   }, [profiles.length, sortProfiles]);
-
 
   // Initial fetch
   useEffect(() => {
     fetchStandings();
   }, []);
 
-
-  // Realtime subscription for instant updates
-  useEffect(() => {
-    console.log("📡 Setting up Realtime subscription for standings");
-
-
-    const channel = supabase
-      .channel('public:profiles')
-      .on(
-        'postgres_changes',
-        {
-          event: 'UPDATE',
-          schema: 'public',
-          table: 'profiles',
-        },
-        (payload) => {
-          console.log("🔥 Profile updated via Realtime:", payload.new);
-          
-          // Skip test account updates
-          if ((payload.new as any).society_name === 'Test Account (not competing)') {
-            console.log("⏭️ Skipping test account update");
-            return;
-          }
-          
-          setProfiles((current) => {
-            // Find and update the specific profile
-            const updated = current.map((profile) => {
-              if (profile.id === (payload.new as any).id) {
-                return {
-                  ...profile,
-                  society_name: (payload.new as any).society_name || profile.society_name,
-                  total_equity: (payload.new as any).total_equity ?? profile.total_equity,
-                  realized_pnl: (payload.new as any).realized_pnl ?? profile.realized_pnl,
-                  initial_capital: (payload.new as any).initial_capital ?? profile.initial_capital,
-                  competition_score: (payload.new as any).competition_score ?? profile.competition_score,
-                  return_score: (payload.new as any).return_score ?? profile.return_score,
-                  risk_score: (payload.new as any).risk_score ?? profile.risk_score,
-                  consistency_score: (payload.new as any).consistency_score ?? profile.consistency_score,
-                  activity_score: (payload.new as any).activity_score ?? profile.activity_score,
-                };
-              }
-              return profile;
-            });
-
-
-            // Re-sort after update
-            return sortProfiles(updated);
-          });
-        }
-      )
-      .subscribe((status) => {
-        if (status === 'SUBSCRIBED') {
-          console.log('✅ Standings Realtime active');
-        }
-        if (status === 'CHANNEL_ERROR') {
-          console.error('❌ Standings Realtime failed');
-        }
-      });
-
-
-    return () => {
-      console.log('🔌 Cleaning up Realtime subscription for standings');
-      supabase.removeChannel(channel);
-    };
-  }, [sortProfiles]);
-
-
-  // Reduced polling interval - only as backup since we have Realtime
-  useEffect(() => {
-    // Poll every 5 minutes as a safety net
-    const interval = setInterval(fetchStandings, 5 * 60 * 1000);
-    return () => clearInterval(interval);
-  }, [fetchStandings]);
-
-
   const formatCurrency = (value: number) =>
-    new Intl.NumberFormat("en-UK", { style: "currency", currency: "EUR" }).format(value);
+    new Intl.NumberFormat("en-UK", {
+      style: "currency",
+      currency: "EUR",
+    }).format(value);
 
-
-  const formatPercent = (value: number) => `${value >= 0 ? "+" : ""}${value.toFixed(2)}%`;
-
+  const formatPercent = (value: number) =>
+    `${value >= 0 ? "+" : ""}${value.toFixed(2)}%`;
 
   const calculateReturn = (profile: Profile) => {
     const initial = profile.initial_capital || 100000;
     if (initial === 0) return 0;
-    return ((profile.total_equity - initial) / initial) * 100;
+    // For hardcoded data without total_equity, base it on realized_pnl
+    return (profile.realized_pnl / initial) * 100;
   };
-
 
   return (
     <div className="standings-container">
       <div className="standings-header">
         <h1>EuroPitch Portfolio Round Leaderboard</h1>
-        <p className="subtitle">Track your society's performance against other societies</p>
+        <p className="subtitle">
+          Track your society's performance against other societies
+        </p>
       </div>
-
 
       {loading ? (
         <div className="loading">Loading leaderboard...</div>
@@ -199,25 +210,28 @@ export default function Standings() {
               <div className="podium-place second">
                 <div className="podium-medal"></div>
                 <h3 className="podium-society">{profiles[1].society_name}</h3>
-                <div className="podium-score">{profiles[1].competition_score || 0} pts</div>
+                <div className="podium-score">
+                  {profiles[1].competition_score || 0} pts
+                </div>
               </div>
-
 
               <div className="podium-place first">
                 <div className="podium-medal"></div>
                 <h3 className="podium-society">{profiles[0].society_name}</h3>
-                <div className="podium-score">{profiles[0].competition_score || 0} pts</div>
+                <div className="podium-score">
+                  {profiles[0].competition_score || 0} pts
+                </div>
               </div>
-
 
               <div className="podium-place third">
                 <div className="podium-medal"></div>
                 <h3 className="podium-society">{profiles[2].society_name}</h3>
-                <div className="podium-score">{profiles[2].competition_score || 0} pts</div>
+                <div className="podium-score">
+                  {profiles[2].competition_score || 0} pts
+                </div>
               </div>
             </div>
           )}
-
 
           <div className="score-breakdown-legend">
             <h3>Score Breakdown</h3>
@@ -241,14 +255,13 @@ export default function Standings() {
             </div>
           </div>
 
-
           <div className="standings-table-container">
             <table className="standings-table">
               <thead>
                 <tr>
                   <th className="rank-col">Rank</th>
                   <th className="society-col">Society</th>
-                  <th>Total Equity</th>
+
                   <th>P&L</th>
                   <th>Return %</th>
                   <th className="subscore-col">Return</th>
@@ -263,11 +276,15 @@ export default function Standings() {
                   const returnPercent = calculateReturn(profile);
                   const isCurrentUser = session?.user?.id === profile.id;
 
-
                   return (
-                    <tr key={profile.id} className={isCurrentUser ? "current-user" : ""}>
+                    <tr
+                      key={profile.id}
+                      className={isCurrentUser ? "current-user" : ""}
+                    >
                       <td className="rank-col">
-                        <span className={`rank-badge rank-${Math.min(index + 1, 4)}`}>
+                        <span
+                          className={`rank-badge rank-${Math.min(index + 1, 4)}`}
+                        >
                           {index === 0 && "🥇"}
                           {index === 1 && "🥈"}
                           {index === 2 && "🥉"}
@@ -275,21 +292,39 @@ export default function Standings() {
                         </span>
                       </td>
                       <td className="society-col">
-                        <strong>{profile.society_name || "Unknown Society"}</strong>
+                        <strong>
+                          {profile.society_name || "Unknown Society"}
+                        </strong>
                       </td>
-                      <td>{formatCurrency(profile.total_equity || 0)}</td>
-                      <td className={profile.realized_pnl >= 0 ? "positive" : "negative"}>
+
+                      <td
+                        className={
+                          profile.realized_pnl >= 0 ? "positive" : "negative"
+                        }
+                      >
                         {formatCurrency(profile.realized_pnl || 0)}
                       </td>
-                      <td className={returnPercent >= 0 ? "positive" : "negative"}>
+                      <td
+                        className={returnPercent >= 0 ? "positive" : "negative"}
+                      >
                         {formatPercent(returnPercent)}
                       </td>
-                      <td className="subscore-col">{profile.return_score || 0}</td>
-                      <td className="subscore-col">{profile.risk_score || 0}</td>
-                      <td className="subscore-col">{profile.consistency_score || 0}</td>
-                      <td className="subscore-col">{profile.activity_score || 0}</td>
+                      <td className="subscore-col">
+                        {profile.return_score || 0}
+                      </td>
+                      <td className="subscore-col">
+                        {profile.risk_score || 0}
+                      </td>
+                      <td className="subscore-col">
+                        {profile.consistency_score || 0}
+                      </td>
+                      <td className="subscore-col">
+                        {profile.activity_score || 0}
+                      </td>
                       <td className="score-col">
-                        <strong className="total-score">{profile.competition_score || 0}</strong>
+                        <strong className="total-score">
+                          {profile.competition_score || 0}
+                        </strong>
                       </td>
                     </tr>
                   );
@@ -297,7 +332,6 @@ export default function Standings() {
               </tbody>
             </table>
           </div>
-
 
           <div className="standings-footer">
             <p className="tiebreaker-note">

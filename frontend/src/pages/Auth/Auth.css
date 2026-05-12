@@ -11,7 +11,7 @@
 
 .auth-container {
   min-height: 100vh;
-  background: linear-gradient(180deg, #001433 0%, #001a4d 100%);
+  background: linear-gradient(180deg, #0a0a2a 0%, #0e0e1f 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,9 +27,9 @@
   background: var(--panel);
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 20px 60px rgba(140, 130, 255, 0.3);
   align-items: stretch;
-  border: 1px solid rgba(201, 169, 97, 0.15);
+  border: 1px solid rgba(140, 130, 255, 0.15);
 }
 
 @media (max-width: 768px) {
@@ -331,9 +331,9 @@
   text-decoration: underline;
 }
 
-/* Sidebar - EU Theme */
+/* Sidebar - Elevatr Purple Theme */
 .auth-sidebar {
-  background: linear-gradient(135deg, #002855 0%, #001845 100%);
+  background: linear-gradient(135deg, #0F1630 0%, #131B3A 100%);
   padding: 48px;
   display: flex;
   align-items: center;
@@ -349,7 +349,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background: linear-gradient(135deg, rgba(201, 169, 97, 0.08) 0%, transparent 100%);
+  background: linear-gradient(135deg, rgba(140, 130, 255, 0.08) 0%, transparent 100%);
   pointer-events: none;
 }
 
@@ -384,7 +384,7 @@
 .feature-icon {
   font-size: 28px;
   flex-shrink: 0;
-  color: #C9A961;
+  color: #8C82FF;
 }
 
 .feature-list li > div {

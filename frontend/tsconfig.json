@@ -7,15 +7,16 @@
     "checkJs": false,
     "jsx": "react-jsx",
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "noEmit": true,
-    "strict": false
+    "strict": false,
+    "types": ["vite/client"]
   },
-  "include": ["src", "src/env.d.ts"],
+  "include": ["src"],
   "exclude": ["node_modules", "dist"]
 }

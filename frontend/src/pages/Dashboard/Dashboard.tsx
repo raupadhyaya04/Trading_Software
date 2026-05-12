@@ -2111,7 +2111,7 @@ export default function Dashboard() {
                   <Line
                     type="monotone"
                     dataKey="pnl"
-                    stroke="var(--brand, #2e8cff)"
+                    stroke="var(--brand, #8C82FF)"
                     strokeWidth={2}
                     dot={false}
                     activeDot={{ r: 5 }}
@@ -2197,14 +2197,14 @@ export default function Dashboard() {
                             key={`cell-${index}`}
                             fill={
                               [
-                                "#2e8cff",
-                                "#22c55e",
-                                "#eab308",
-                                "#ef4444",
+                                "#8C82FF",
+                                "#6b6bff",
+                                "#a99dff",
+                                "#4a4aff",
                                 "#8b5cf6",
-                                "#ec4899",
-                                "#06b6d4",
-                                "#f97316",
+                                "#c4b5fd",
+                                "#7b70ff",
+                                "#9d91ff",
                               ][index % 8]
                             }
                           />

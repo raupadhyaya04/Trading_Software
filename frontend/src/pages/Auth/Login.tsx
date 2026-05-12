@@ -88,7 +88,7 @@ export default function Login() {
         <div className="auth-card">
           <div className="auth-header">
             <div className="auth-logo">
-              <h1>EuroPitch Portfolio Challenge</h1>
+              <h1>Elevatr Portfolio Engine</h1>
             </div>
             <h2>Welcome Back</h2>
           </div>

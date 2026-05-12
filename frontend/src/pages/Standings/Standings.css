@@ -113,9 +113,9 @@
 }
 
 .timeframe-btn.active {
-  background: linear-gradient(135deg, #002855 0%, #003366 100%);
+  background: linear-gradient(135deg, #0F1630 0%, #131B3A 100%);
   color: white;
-  box-shadow: 0 2px 8px rgba(0, 40, 85, 0.4);
+  box-shadow: 0 2px 8px rgba(140, 130, 255, 0.4);
 }
 
 /* Podium Section - ORIGINAL GOLD/SILVER/BRONZE COLORS */
@@ -225,7 +225,7 @@
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #002855 0%, #003366 100%);
+  background: linear-gradient(135deg, #0F1630 0%, #131B3A 100%);
   color: white;
   display: flex;
   align-items: center;
@@ -233,7 +233,7 @@
   font-size: 28px;
   font-weight: 700;
   margin: 0 auto 12px;
-  border: 2px solid rgba(201, 169, 97, 0.3);
+  border: 2px solid rgba(140, 130, 255, 0.3);
 }
 
 .podium-user h3 {
@@ -325,8 +325,8 @@
 }
 
 .standings-table thead {
-  background: linear-gradient(135deg, #002855 0%, #003366 100%);
-  border-bottom: 2px solid rgba(201, 169, 97, 0.4);
+  background: linear-gradient(135deg, #0F1630 0%, #131B3A 100%);
+  border-bottom: 2px solid rgba(140, 130, 255, 0.4);
 }
 
 .standings-table th {
@@ -417,7 +417,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #002855 0%, #003366 100%);
+  background: linear-gradient(135deg, #0F1630 0%, #131B3A 100%);
   color: white;
   display: flex;
   align-items: center;
@@ -445,8 +445,8 @@
 }
 
 .you-badge {
-  background: #C9A961;
-  color: #001845;
+  background: #8C82FF;
+  color: #0a0a2a;
   padding: 4px 10px;
   border-radius: 12px;
   font-size: 11px;
@@ -613,18 +613,18 @@
 .podium-score {
   font-size: 32px;
   font-weight: 800;
-  color: #C9A961;
-  text-shadow: 0 2px 6px rgba(201, 169, 97, 0.5);
+  color: #8C82FF;
+  text-shadow: 0 2px 6px rgba(140, 130, 255, 0.5);
 }
 
 /* Score Breakdown Legend */
 .score-breakdown-legend {
   margin: 32px 0;
   padding: 24px;
-  background: linear-gradient(135deg, rgba(0, 24, 69, 0.8) 0%, rgba(0, 40, 85, 0.7) 100%);
-  border: 1px solid rgba(201, 169, 97, 0.25);
+  background: linear-gradient(135deg, rgba(15, 22, 48, 0.8) 0%, rgba(19, 27, 58, 0.7) 100%);
+  border: 1px solid rgba(140, 130, 255, 0.25);
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(140, 130, 255, 0.3);
 }
 
 .score-breakdown-legend h3 {
@@ -654,8 +654,8 @@
   justify-content: center;
   min-width: 45px;
   padding: 6px 10px;
-  background: linear-gradient(135deg, #C9A961 0%, #A88B47 100%);
-  color: #001845;
+  background: linear-gradient(135deg, #8C82FF 0%, #7b70ff 100%);
+  color: #0a0a2a;
   font-weight: 700;
   font-size: 14px;
   border-radius: 6px;

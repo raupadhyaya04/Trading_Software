@@ -1,16 +1,16 @@
 :root {
-  --bg: #001a4d; /* Deep EU blue background */
-  --bg-light: #002966; /* Slightly lighter blue */
-  --panel: #ffffff; /* White panels */
-  --text: #1a2332; /* Dark text for white panels */
-  --text-light: #f5f7fa; /* Light text for blue backgrounds */
-  --muted: #5a6b7f; /* Dark muted for panels */
-  --muted-light: #c5d0e3; /* Light muted for blue backgrounds */
-  --brand: #003399; /* EU Blue */
-  --brand-ink: #0055cc; /* Lighter hover blue */
-  --accent: #FFCC00; /* EU Gold/Yellow */
-  --accent-dark: #d9a600; /* Darker gold for hover */
-  --ring: rgba(255, 204, 0, 0.35);
+  --bg: #0a0a2a; /* Elevatr dark purple background */
+  --bg-light: #0e0e1f; /* Slightly lighter purple */
+  --panel: #0F1630; /* Dark purple panels */
+  --text: #ffffff; /* White text */
+  --text-light: #ffffff; /* Light text */
+  --muted: #cfcfff; /* Purple muted */
+  --muted-light: #E0E0FF; /* Light purple muted */
+  --brand: #4a4aff; /* Elevatr purple */
+  --brand-ink: #6b6bff; /* Lighter hover purple */
+  --accent: #8C82FF; /* Purple accent */
+  --accent-dark: #7b70ff; /* Darker purple for hover */
+  --ring: rgba(140, 130, 255, 0.4);
   --font-sans: 'Inter', 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
 }
 
@@ -27,7 +27,7 @@ body {
   margin: 0;
   font-family: var(--font-sans);
   color: var(--text-light);
-  background: linear-gradient(180deg, #001433, #001a4d 30% 70%, #001433);
+  background: linear-gradient(180deg, #0a0a2a, #0e0e1f 30% 70%, #0a0a2a);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -51,15 +51,15 @@ body {
   }
 }
 
-/* HEADER - DARKER EU BLUE THEME (like main website) */
+/* HEADER - ELEVATR PURPLE THEME */
 .header {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: #001a4d; /* Dark navy blue like main site */
+  background: #0a0a2a; /* Elevatr dark purple */
   backdrop-filter: blur(10px);
-  border-bottom: 2px solid #FFCC00;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  border-bottom: 2px solid #8C82FF;
+  box-shadow: 0 4px 12px rgba(140, 130, 255, 0.3);
 }
 
 .nav-container {
@@ -154,7 +154,7 @@ body {
   left: 0;
   width: 0%;
   height: 2px;
-  background: #FFCC00;
+  background: #8C82FF;
   transition: width 0.25s ease;
 }
 
@@ -227,12 +227,12 @@ body {
     top: 70px;
     right: 0.75rem;
     flex-direction: column;
-    background: #0c0f14;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #0F1630;
+    border: 1px solid rgba(140, 130, 255, 0.2);
     border-radius: 12px;
     padding: 0.75rem 1rem;
     display: none;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 5px 15px rgba(140, 130, 255, 0.3);
     z-index: 1000;
   }
 
@@ -264,13 +264,13 @@ body {
   }
 }
 
-/* FOOTER - DARKER EU BLUE THEME */
+/* FOOTER - ELEVATR PURPLE THEME */
 .footer {
-  background: #001a4d; /* Dark navy blue like header */
-  border-top: 2px solid #FFCC00;
+  background: #0a0a2a; /* Elevatr dark purple like header */
+  border-top: 2px solid #8C82FF;
   padding: 2.5rem 1rem;
   text-align: center;
-  color: #c5d0e3;
+  color: #cfcfff;
   margin-top: auto;
 }
 
@@ -291,13 +291,13 @@ body {
 }
 
 .footer-text {
-  color: #f5f7fa;
+  color: #ffffff;
   margin: 0;
   font-size: 0.95rem;
 }
 
 .footer-subtext {
-  color: #c5d0e3;
+  color: #cfcfff;
   font-size: 0.85rem;
   max-width: 500px;
   line-height: 1.5;
@@ -305,14 +305,14 @@ body {
 }
 
 .footer a {
-  color: #FFCC00;
+  color: #8C82FF;
   text-decoration: none;
   font-weight: 600;
 }
 
 .footer a:hover {
   text-decoration: underline;
-  color: #d9a600;
+  color: #a99dff;
 }
 
 /* LAYOUT HELPERS */
@@ -343,12 +343,12 @@ body {
   padding: 4rem 0 2rem;
   background: radial-gradient(
     1200px 400px at 10% -20%,
-    rgba(46, 140, 255, 0.12),
+    rgba(140, 130, 255, 0.15),
     transparent 60%
   ),
   radial-gradient(
     1200px 400px at 90% -20%,
-    rgba(46, 140, 255, 0.12),
+    rgba(140, 130, 255, 0.15),
     transparent 60%
   );
   text-align: center;
@@ -394,7 +394,7 @@ h3 { font-weight: 600; }
 
 .card {
   background: var(--panel);
-  border: 1px solid #1b2230;
+  border: 1px solid rgba(140, 130, 255, 0.2);
   border-radius: 14px;
   padding: 1rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -402,7 +402,7 @@ h3 { font-weight: 600; }
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 20px rgba(140, 130, 255, 0.4);
 }
 
 .card h3 {
@@ -445,8 +445,8 @@ h3 { font-weight: 600; }
   gap: 0.5rem;
   padding: 0.6rem 1rem;
   border-radius: 12px;
-  border: 1px solid #263248;
-  background: #121722;
+  border: 1px solid rgba(140, 130, 255, 0.3);
+  background: #0F1630;
   color: var(--text);
   text-decoration: none;
   font-weight: 500;
@@ -454,7 +454,7 @@ h3 { font-weight: 600; }
 }
 
 .btn:hover {
-  background: #161c2a;
+  background: #131B3A;
   transform: translateY(-1px);
 }
 
@@ -488,8 +488,8 @@ label {
 
 input,
 textarea {
-  border: 1px solid #263248;
-  background: #101521;
+  border: 1px solid rgba(140, 130, 255, 0.3);
+  background: #0F1630;
   color: var(--text);
   border-radius: 10px;
   padding: 0.7rem;

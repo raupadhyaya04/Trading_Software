@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
-import logo from "../assets/EuroPitch_logo.png";
+import logo from "../assets/Elevatr-transparent.png";
 import { useAuth } from "../context/AuthContext";
 import { useCompetitionScore } from "../context/CompetitionScoreContext";
 import { AiFillStar } from "react-icons/ai";
@@ -12,7 +12,7 @@ const Header = () => {
   const [showScoreDropdown, setShowScoreDropdown] = useState(false);
   const [showWatchlistDropdown, setShowWatchlistDropdown] = useState(false);
   const [priceMap, setPriceMap] = useState<Map<string, number>>(new Map());
-  
+
   const { session, loading } = useAuth();
   const { competitionScore } = useCompetitionScore();
   const { watchlist, removeFromWatchlist } = useWatchlist();
@@ -26,10 +26,10 @@ const Header = () => {
 
   // Get score color based on value
   const getScoreColor = (score: number) => {
-    if (score >= 80) return "#00ff88"; // Green
-    if (score >= 60) return "#C9A961"; // Gold
-    if (score >= 40) return "#FFA500"; // Orange
-    return "#ff4757"; // Red
+    if (score >= 80) return "#10B981"; // Green
+    if (score >= 60) return "#8C82FF"; // Purple
+    if (score >= 40) return "#F59E0B"; // Orange
+    return "#EF4444"; // Red
   };
 
   const totalScore = competitionScore.totalScore;
@@ -44,7 +44,7 @@ const Header = () => {
         const symbolParams = watchlist.map((s) => `symbols=${s}`).join("&");
         const priceResponse = await fetch(
           `https://trading-software.onrender.com/equities/quotes?${symbolParams}&chunk_size=50`,
-          { signal: AbortSignal.timeout(10000) }
+          { signal: AbortSignal.timeout(10000) },
         );
 
         if (priceResponse.ok) {
@@ -52,12 +52,14 @@ const Header = () => {
           const newPriceMap = new Map<string, number>();
 
           if (priceData.data && typeof priceData.data === "object") {
-            Object.entries(priceData.data).forEach(([symbol, stockData]: [string, any]) => {
-              const price = Number(stockData?.price ?? 0);
-              if (symbol && price > 0) {
-                newPriceMap.set(symbol.toUpperCase().trim(), price);
-              }
-            });
+            Object.entries(priceData.data).forEach(
+              ([symbol, stockData]: [string, any]) => {
+                const price = Number(stockData?.price ?? 0);
+                if (symbol && price > 0) {
+                  newPriceMap.set(symbol.toUpperCase().trim(), price);
+                }
+              },
+            );
           }
 
           setPriceMap(newPriceMap);
@@ -207,7 +209,7 @@ const Header = () => {
                 >
                   <div className="dropdown-item">
                     <span className="dropdown-label">Total Score</span>
-                    <span 
+                    <span
                       className="dropdown-value total"
                       style={{ color: scoreColor }}
                     >

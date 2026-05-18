@@ -45,8 +45,8 @@
     transform: none;
     gap: 0;
     flex-direction: column;
-    background: rgba(12, 15, 20, 0.98);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--panel);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 0.75rem 1rem;
     display: none;
@@ -100,10 +100,10 @@
 .watchlist-badge {
   position: relative;
   padding: 12px 16px;
-  background: rgba(0, 40, 85, 0.4);
-  border: 1px solid rgba(201, 169, 97, 0.3);
+  background: var(--panel-secondary);
+  border: 1px solid var(--border);
   border-radius: 8px;
-  color: #ffffff;
+  color: var(--text);
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
@@ -120,15 +120,15 @@
 .watchlist-icon {
   font-size: 20px;
   line-height: 1;
-  color: #8C82FF;
+  color: var(--brand);
 }
 
 .watchlist-count {
   position: absolute;
   top: -6px;
   right: -6px;
-  background: #8C82FF;
-  color: #0a0a2a;
+  background: var(--brand);
+  color: var(--bg);
   font-size: 11px;
   font-weight: 700;
   padding: 2px 6px;
@@ -153,34 +153,29 @@
 
 .dropdown-header {
   padding: 16px 20px;
-  border-bottom: 1px solid rgba(140, 130, 255, 0.2);
+  border-bottom: 1px solid rgba(0, 191, 99, 0.2);
 }
 
 .dropdown-header h3 {
   margin: 0;
   font-size: 16px;
   font-weight: 700;
-  color: #8C82FF;
-}
-
-.dropdown-empty {
-  padding: 32px 20px;
-  text-align: center;
+  color: var(--brand);
 }
 
 .dropdown-empty p {
   margin: 0 0 16px 0;
-  color: #B8C5D6;
+  color: var(--muted);
   font-size: 14px;
 }
 
 .btn-browse {
   display: inline-block;
   padding: 10px 20px;
-  background: rgba(140, 130, 255, 0.2);
-  border: 1px solid rgba(140, 130, 255, 0.4);
+  background: rgba(0, 191, 99, 0.2);
+  border: 1px solid rgba(0, 191, 99, 0.4);
   border-radius: 6px;
-  color: #8C82FF;
+  color: var(--brand);
   text-decoration: none;
   font-size: 14px;
   font-weight: 600;
@@ -188,8 +183,8 @@
 }
 
 .btn-browse:hover {
-  background: rgba(140, 130, 255, 0.3);
-  border-color: rgba(140, 130, 255, 0.6);
+  background: rgba(0, 191, 99, 0.3);
+  border-color: rgba(0, 191, 99, 0.6);
 }
 
 .watchlist-items {
@@ -199,7 +194,7 @@
 /* ALIGNED WITH DASHBOARD */
 .watchlist-item {
   background: rgba(15, 22, 48, 0.5);
-  border: 1px solid rgba(140, 130, 255, 0.2);
+  border: 1px solid rgba(0, 191, 99, 0.2);
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 10px;
@@ -210,7 +205,7 @@
 
 .watchlist-item:hover {
   background: rgba(19, 27, 58, 0.7);
-  border-color: rgba(140, 130, 255, 0.4);
+  border-color: rgba(0, 191, 99, 0.4);
   transform: translateY(-2px);
 }
 
@@ -225,14 +220,14 @@
 .watchlist-item .symbol {
   font-size: 18px;
   font-weight: 700;
-  color: #8C82FF;
+  color: var(--brand);
   flex-shrink: 0;
 }
 
 .watchlist-item .price {
   font-size: 16px;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text);
   align-self: flex-start;
 }
 

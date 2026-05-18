@@ -27,7 +27,7 @@ const Header = () => {
   // Get score color based on value
   const getScoreColor = (score: number) => {
     if (score >= 80) return "#10B981"; // Green
-    if (score >= 60) return "#8C82FF"; // Purple
+    if (score >= 60) return "#00bf63"; // Brand lime
     if (score >= 40) return "#F59E0B"; // Orange
     return "#EF4444"; // Red
   };
@@ -86,7 +86,7 @@ const Header = () => {
     <header className="header">
       <div className="nav-container">
         <NavLink to="/" className="brand">
-          <img src={logo} alt="EuroPitch Logo" className="logo" />
+          <img src={logo} alt="Elevatr Logo" className="logo" />
           <span className="brand-text"></span>
         </NavLink>
 

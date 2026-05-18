@@ -44,8 +44,8 @@
 .timeframe-btn.active,
 .chart-type-btn.active {
   background: linear-gradient(135deg, #0F1630 0%, #131B3A 100%);
-  border-color: #8C82FF;
-  color: #8C82FF;
+  border-color: var(--brand);
+  color: var(--brand);
 }
 
 .indicator-toggles {
@@ -74,7 +74,7 @@
   width: 16px;
   height: 16px;
   cursor: pointer;
-  accent-color: #8C82FF;
+  accent-color: var(--brand);
 }
 
 .chart-display {
@@ -133,7 +133,7 @@
 .price-value {
   font-size: 20px;
   font-weight: 700;
-  color: #8C82FF;
+  color: var(--brand);
 }
 
 .chart-note {

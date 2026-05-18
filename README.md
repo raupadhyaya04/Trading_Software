@@ -1,8 +1,8 @@
-# EuroPitch Trading Software
+# Elevatr - Equity Investing Platform
 
 ## Introduction
 
-Welcome to the Trading Software for EuroPitch. This Python-based tool is designed to streamline and enhance the management of our investment portfolio. This project aims to be a valuable resource for members of EuroPitch interested in computer science and intended to provide a gateway to working with Python in finance.
+Welcome to Elevatr, an educational equity investing platform designed to help everyday people and students learn investing fundamentals through hands-on practice. This project combines portfolio management, analytics, and educational tools to make equity investing accessible and understandable.
 
 ### Features
 
@@ -14,21 +14,24 @@ Welcome to the Trading Software for EuroPitch. This Python-based tool is designe
 
 ## Motivation and Background
 
-This project was initiated to address the need for a more streamlined and accessible tool for managing our portfolio. It is supposed to be used by students who are interested in finance and computer science. The project is intended to be a resource for members of EuroPitch interested in computer science; a place where they can apply their skills to a real-world (ish) scenario.
+This project was initiated to make equity investing education accessible to everyone. It serves two primary audiences:
+
+1. **General Users**: Learning basic financial literacy and portfolio management with enhanced analytics
+2. **Students & Institutions**: Practicing trading skills through simulated and real-money portfolios, with support for student-managed funds
 
 ## How does it work?
 
 - Download the latest data of all of the positions by running `python3 main.py -download`
-This uses the Yahoo Finance package (not the api technically) to get the latest data of all the stocks and puts them into `downloaded_data.pkl`
+  This uses the Yahoo Finance package (not the api technically) to get the latest data of all the stocks and puts them into `downloaded_data.pkl`
 
 - Download the latest exchange rate data by running `python3 update_data.py` and then `python3 convert_csv.py`
-This get the latest exchange rate data from the ECB's published historical data. By running `convert_csv.py` it will merge that downloaded data with the `ecb_daily.pkl` which stores the daily fx data going back to the early 2000s.
-*note*
-`update_data.py` is a shell script for now but I'm working on making it into a python script to also make it work on Windows. In the future `main.py` should be able to update the data (like It is done now with the -download flag for stock data) without having to run all those files on their own.
+  This get the latest exchange rate data from the ECB's published historical data. By running `convert_csv.py` it will merge that downloaded data with the `ecb_daily.pkl` which stores the daily fx data going back to the early 2000s.
+  _note_
+  `update_data.py` is a shell script for now but I'm working on making it into a python script to also make it work on Windows. In the future `main.py` should be able to update the data (like It is done now with the -download flag for stock data) without having to run all those files on their own.
 
 - With all the data updated you can run `python3 main.py --daily-dump or --weekly-report` to produce the daily dump or weekly report respectively.
 
-- I'm using cron and rclone to run the script at specified times and then upload the data to our EuroPitch google drive.
+- I'm using cron and rclone to run the script at specified times and then upload the data to cloud storage.
 
 ## Installation and Setup
 
@@ -39,12 +42,12 @@ To set up the Trading Software, follow these steps:
 `git clone https://github.com/matat99/portfolio_mgr.git`
 
 2. Install the required packages:
-`cd portfolio_mgr`
+   `cd portfolio_mgr`
 
 `pip install -r requirements.txt`
 
-
 ## To Do
+
 - [ ] Make the README actually useful
 - [ ] Implement a way to track stock splits
 - [ ] Make this work on Windows
@@ -52,7 +55,6 @@ To set up the Trading Software, follow these steps:
 - [ ] Maybe a UI?
 - [ ] Make the fx data update less tedious.
 - [ ] Clean up unused imports and de-bloat requirements.txt.
-
 
 ## Contributors
 

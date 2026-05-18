@@ -75,7 +75,7 @@
 .current-price .value {
   font-size: 24px;
   font-weight: 700;
-  color: #8C82FF;
+  color: var(--brand);
 }
 
 .section {
@@ -138,7 +138,7 @@
 
 .order-type-toggle .toggle-button.active {
   background: linear-gradient(135deg, #0F1630 0%, #131B3A 100%);
-  border-color: #8C82FF;
+  border-color: var(--brand);
   color: white;
   box-shadow: 0 4px 12px rgba(0, 40, 85, 0.3);
 }
@@ -158,7 +158,7 @@
 
 .order-input:focus {
   outline: none;
-  border-color: #8C82FF;
+  border-color: var(--brand);
   background: rgba(0, 40, 85, 0.5);
   box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.1);
 }
@@ -210,7 +210,7 @@
 .summary-row:last-child .value {
   font-size: 20px;
   font-weight: 700;
-  color: #8C82FF;
+  color: var(--brand);
 }
 
 .modal-actions {
@@ -357,5 +357,5 @@
 }
 
 .current-holdings {
-  color: #8C82FF;
+  color: var(--brand);
 }

@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useRef,
+  useCallback,
+} from "react";
 import StockDetailModal from "../StockDetailModal/StockDetailModal";
 import "./StockMetrics.css";
 
@@ -32,7 +38,10 @@ interface Stock {
 
 interface WebSocketMessage {
   type: string;
-  data: Record<string, { price: number; change: number; changepercent: number }>;
+  data: Record<
+    string,
+    { price: number; change: number; changepercent: number }
+  >;
 }
 
 interface MarketStatus {
@@ -71,7 +80,10 @@ class ErrorBoundary extends React.Component<
         <div className="error-boundary">
           <h2>Something went wrong</h2>
           <p>We're sorry, but there was an error loading the stock metrics.</p>
-          <button onClick={() => window.location.reload()} className="btn-primary">
+          <button
+            onClick={() => window.location.reload()}
+            className="btn-primary"
+          >
             Reload Page
           </button>
         </div>
@@ -84,11 +96,16 @@ class ErrorBoundary extends React.Component<
 function StockMetricsContent() {
   const [stocks, setStocks] = useState<Stock[]>([]);
   const [tickers, setTickers] = useState<string[]>([]);
-  const [sectorMapping, setSectorMapping] = useState<Record<string, string>>({});
+  const [sectorMapping, setSectorMapping] = useState<Record<string, string>>(
+    {},
+  );
   const [nameMapping, setNameMapping] = useState<Record<string, string>>({});
   const [tickersLoadError, setTickersLoadError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortConfig, setSortConfig] = useState<SortConfig>({ key: "marketCap", direction: "desc" });
+  const [sortConfig, setSortConfig] = useState<SortConfig>({
+    key: "marketCap",
+    direction: "desc",
+  });
   const [selectedStock, setSelectedStock] = useState<Stock | null>(null);
   const [compareMode, setCompareMode] = useState(false);
   const [selectedForCompare, setSelectedForCompare] = useState<number[]>([]);
@@ -154,7 +171,7 @@ function StockMetricsContent() {
                   };
                 }
                 return stock;
-              })
+              }),
             );
           }
         } catch (err) {
@@ -214,7 +231,9 @@ function StockMetricsContent() {
 
   // Calculate time remaining using PROPER timezone handling
   const formatTimeRemaining = (targetTimeEST: Date): string => {
-    const nowEST = new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
+    const nowEST = new Date(
+      new Date().toLocaleString("en-US", { timeZone: "America/New_York" }),
+    );
     const diffMs = targetTimeEST.getTime() - nowEST.getTime();
 
     if (diffMs <= 0) return "now";
@@ -235,7 +254,9 @@ function StockMetricsContent() {
 
   // Check market status using ONLY EST timezone
   const checkMarketStatus = useCallback((): MarketStatus => {
-    const nowEST = new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
+    const nowEST = new Date(
+      new Date().toLocaleString("en-US", { timeZone: "America/New_York" }),
+    );
     const day = nowEST.getDay();
     const hours = nowEST.getHours();
     const minutes = nowEST.getMinutes();
@@ -342,20 +363,26 @@ function StockMetricsContent() {
         const nameMap: Record<string, string> = {};
 
         if (json && json.sectors && typeof json.sectors === "object") {
-          Object.entries(json.sectors).forEach(([sectorKey, sectorData]: [string, any]) => {
-            if (sectorData && sectorData.stocks && Array.isArray(sectorData.stocks)) {
-              const sectorDisplayName = sectorData.name || sectorKey;
-              sectorData.stocks.forEach((stock: any) => {
-                if (stock && stock.ticker) {
-                  symbols.push(stock.ticker);
-                  sectorMap[stock.ticker] = sectorDisplayName;
-                  if (stock.name) {
-                    nameMap[stock.ticker] = stock.name;
+          Object.entries(json.sectors).forEach(
+            ([sectorKey, sectorData]: [string, any]) => {
+              if (
+                sectorData &&
+                sectorData.stocks &&
+                Array.isArray(sectorData.stocks)
+              ) {
+                const sectorDisplayName = sectorData.name || sectorKey;
+                sectorData.stocks.forEach((stock: any) => {
+                  if (stock && stock.ticker) {
+                    symbols.push(stock.ticker);
+                    sectorMap[stock.ticker] = sectorDisplayName;
+                    if (stock.name) {
+                      nameMap[stock.ticker] = stock.name;
+                    }
                   }
-                }
-              });
-            }
-          });
+                });
+              }
+            },
+          );
         }
 
         console.log("Parsed symbols:", symbols.length, symbols);
@@ -399,7 +426,9 @@ function StockMetricsContent() {
       const fetchPromises = chunks.map(async (chunk) => {
         const params = new URLSearchParams();
         chunk.forEach((sym) => params.append("symbols", sym));
-        const res = await fetch(`${API_BASE_URL}/equities/quotes?${params.toString()}`);
+        const res = await fetch(
+          `${API_BASE_URL}/equities/quotes?${params.toString()}`,
+        );
         if (!res.ok) return [];
         const json = await res.json();
         return Object.values(json.data || {});
@@ -420,31 +449,30 @@ function StockMetricsContent() {
           sector: sector,
           price: row.price || 0,
           change: row.change || 0,
-          changePercent: row.change_percent || 0,  // ← underscore
-          marketCap: row.market_cap || 0,  // ← underscore
+          changePercent: row.change_percent || 0, // ← underscore
+          marketCap: row.market_cap || 0, // ← underscore
           volume: row.volume || 0,
-          peRatio: row.pe_ratio || null,  // ← underscore
-          pbRatio: row.price_to_book || null,  // ← completely different!
-          pegRatio: row.peg_ratio || null,  // ← underscore
-          dividendYield: row.dividend_yield || null,  // ← underscore
+          peRatio: row.pe_ratio || null, // ← underscore
+          pbRatio: row.price_to_book || null, // ← completely different!
+          pegRatio: row.peg_ratio || null, // ← underscore
+          dividendYield: row.dividend_yield || null, // ← underscore
           roe: row.roe || null,
           roa: row.roa || null,
-          debtToEquity: row.debt_to_equity || null,  // ← underscore
-          currentRatio: row.current_ratio || null,  // ← underscore
-          quickRatio: row.quick_ratio || null,  // ← underscore
-          grossMargin: row.gross_margin || null,  // ← underscore
-          operatingMargin: row.operating_margin || null,  // ← underscore
-          netMargin: row.profit_margin || null,  // ← completely different!
-          revenueGrowth: row.revenue_growth || null,  // ← underscore
-          earningsGrowth: row.earnings_growth || null,  // ← underscore
+          debtToEquity: row.debt_to_equity || null, // ← underscore
+          currentRatio: row.current_ratio || null, // ← underscore
+          quickRatio: row.quick_ratio || null, // ← underscore
+          grossMargin: row.gross_margin || null, // ← underscore
+          operatingMargin: row.operating_margin || null, // ← underscore
+          netMargin: row.profit_margin || null, // ← completely different!
+          revenueGrowth: row.revenue_growth || null, // ← underscore
+          earningsGrowth: row.earnings_growth || null, // ← underscore
           rsi: row.rsi || null,
           beta: row.beta || null,
-          fiftyTwoWeekHigh: row["52week_high"] || null,  // ← bracket notation
-          fiftyTwoWeekLow: row["52week_low"] || null,  // ← bracket notation
-          avgVolume: row.avg_volume || null,  // ← underscore
+          fiftyTwoWeekHigh: row["52week_high"] || null, // ← bracket notation
+          fiftyTwoWeekLow: row["52week_low"] || null, // ← bracket notation
+          avgVolume: row.avg_volume || null, // ← underscore
         };
       });
-
 
       setStocks(stocksArray);
     } catch (err) {
@@ -487,7 +515,9 @@ function StockMetricsContent() {
     };
   }, [tickers, tickersLoadError, fetchStocks]);
 
-  const [collapsedSectors, setCollapsedSectors] = useState<Record<string, boolean>>({});
+  const [collapsedSectors, setCollapsedSectors] = useState<
+    Record<string, boolean>
+  >({});
 
   const toggleSectorCollapse = (sector: string) => {
     setCollapsedSectors((prev) => ({
@@ -504,10 +534,13 @@ function StockMetricsContent() {
     const rows = filteredAndSortedStocks.map((stock) =>
       allColumns
         .filter((col) => visibleColumns.includes(col.key))
-        .map((col) => stock[col.key as keyof Stock])
+        .map((col) => stock[col.key as keyof Stock]),
     );
 
-    const csvContent = [headers.join(","), ...rows.map((row) => row.join(","))].join("\n");
+    const csvContent = [
+      headers.join(","),
+      ...rows.map((row) => row.join(",")),
+    ].join("\n");
 
     const blob = new Blob([csvContent], { type: "text/csv" });
     const url = window.URL.createObjectURL(blob);
@@ -522,7 +555,8 @@ function StockMetricsContent() {
       const matchesSearch =
         stock.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
         stock.name.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesSector = sectorFilter === "all" || stock.sector === sectorFilter;
+      const matchesSector =
+        sectorFilter === "all" || stock.sector === sectorFilter;
       return matchesSearch && matchesSector;
     });
 
@@ -549,7 +583,10 @@ function StockMetricsContent() {
     return groups;
   }, [filteredAndSortedStocks]);
 
-  const sectors = ["all", ...Array.from(new Set(stocks.map((s) => s.sector || "Unknown")))];
+  const sectors = [
+    "all",
+    ...Array.from(new Set(stocks.map((s) => s.sector || "Unknown"))),
+  ];
 
   const requestSort = (key: string) => {
     let direction: "asc" | "desc" = "asc";
@@ -633,8 +670,16 @@ function StockMetricsContent() {
       <div className="metrics-header">
         <div className="header-top">
           <div>
-            <h1>EuroPitch Stock & ETF Price Dashboard</h1>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "8px", fontSize: "14px" }}>
+            <h1>Elevatr Stock & ETF Price Dashboard</h1>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                marginTop: "8px",
+                fontSize: "14px",
+              }}
+            >
               <span
                 style={{
                   display: "inline-block",
@@ -645,14 +690,19 @@ function StockMetricsContent() {
                 }}
               ></span>
               <span style={{ fontWeight: 600 }}>{marketStatus.status}</span>
-              <span style={{ color: "#6b7280" }}>{marketStatus.nextChange}</span>
+              <span style={{ color: "#6b7280" }}>
+                {marketStatus.nextChange}
+              </span>
             </div>
           </div>
           <div className="header-actions">
             <button className="btn-secondary" onClick={exportToCSV}>
               Download Prices as CSV
             </button>
-            <button className="btn-secondary" onClick={() => setShowColumnCustomizer(!showColumnCustomizer)}>
+            <button
+              className="btn-secondary"
+              onClick={() => setShowColumnCustomizer(!showColumnCustomizer)}
+            >
               Customise Columns
             </button>
           </div>
@@ -660,7 +710,13 @@ function StockMetricsContent() {
 
         <div className="filters-row">
           <div className="search-box">
-            <svg className="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <svg
+              className="search-icon"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+            >
               <path
                 d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM19 19l-4.35-4.35"
                 stroke="currentColor"
@@ -677,7 +733,11 @@ function StockMetricsContent() {
               className="search-input"
             />
           </div>
-          <select className="sector-filter" value={sectorFilter} onChange={(e) => setSectorFilter(e.target.value)}>
+          <select
+            className="sector-filter"
+            value={sectorFilter}
+            onChange={(e) => setSectorFilter(e.target.value)}
+          >
             {sectors.map((sector) => (
               <option key={sector} value={sector}>
                 {sector === "all" ? "All Sectors" : sector}
@@ -693,7 +753,10 @@ function StockMetricsContent() {
           <div className="column-customizer">
             <div className="customizer-header">
               <h3>Customize Visible Columns</h3>
-              <button className="btn-close" onClick={() => setShowColumnCustomizer(false)}>
+              <button
+                className="btn-close"
+                onClick={() => setShowColumnCustomizer(false)}
+              >
                 ✕
               </button>
             </div>
@@ -723,7 +786,10 @@ function StockMetricsContent() {
           Object.entries(groupedBySector).map(([sector, sectorStocks]) => (
             <div key={sector} className="sector-group">
               <div className="sector-header">
-                <button className="sector-toggle" onClick={() => toggleSectorCollapse(sector)}>
+                <button
+                  className="sector-toggle"
+                  onClick={() => toggleSectorCollapse(sector)}
+                >
                   {collapsedSectors[sector] ? "▶" : "▼"}
                 </button>
                 <h2 className="sector-title">
@@ -747,7 +813,10 @@ function StockMetricsContent() {
                             <div className="th-content">
                               {column.label}
                               <span className="sort-indicator">
-                                {sortConfig.key === column.key && (sortConfig.direction === "asc" ? " ↑" : " ↓")}
+                                {sortConfig.key === column.key &&
+                                  (sortConfig.direction === "asc"
+                                    ? " ↑"
+                                    : " ↓")}
                               </span>
                             </div>
                           </th>
@@ -764,7 +833,10 @@ function StockMetricsContent() {
                               type="checkbox"
                               checked={selectedForCompare.includes(stock.id)}
                               onChange={() => handleCompareToggle(stock.id)}
-                              disabled={!selectedForCompare.includes(stock.id) && selectedForCompare.length >= 5}
+                              disabled={
+                                !selectedForCompare.includes(stock.id) &&
+                                selectedForCompare.length >= 5
+                              }
                             />
                           </td>
                         )}
@@ -776,16 +848,26 @@ function StockMetricsContent() {
                               className={`${column.key}-cell ${getCellClassName(column.key, stock[column.key as keyof Stock])}`}
                             >
                               {column.key === "symbol" ? (
-                                <strong>{stock[column.key as keyof Stock]}</strong>
+                                <strong>
+                                  {stock[column.key as keyof Stock]}
+                                </strong>
                               ) : column.key === "name" ? (
-                                <span className="company-name">{stock[column.key as keyof Stock]}</span>
+                                <span className="company-name">
+                                  {stock[column.key as keyof Stock]}
+                                </span>
                               ) : (
-                                formatValue(stock[column.key as keyof Stock], column.format)
+                                formatValue(
+                                  stock[column.key as keyof Stock],
+                                  column.format,
+                                )
                               )}
                             </td>
                           ))}
                         <td className="action-col">
-                          <button className="btn-details" onClick={() => setSelectedStock(stock)}>
+                          <button
+                            className="btn-details"
+                            onClick={() => setSelectedStock(stock)}
+                          >
                             Details
                           </button>
                         </td>
@@ -799,7 +881,12 @@ function StockMetricsContent() {
         )}
       </div>
 
-      {selectedStock && <StockDetailModal stock={selectedStock} onClose={() => setSelectedStock(null)} />}
+      {selectedStock && (
+        <StockDetailModal
+          stock={selectedStock}
+          onClose={() => setSelectedStock(null)}
+        />
+      )}
     </div>
   );
 }

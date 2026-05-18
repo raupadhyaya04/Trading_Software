@@ -56,7 +56,7 @@
 .metrics-header h1 {
   font-size: 32px;
   font-weight: 600;
-  color: #FFFFFF;
+  color: var(--text);
   margin: 0;
 }
 
@@ -132,7 +132,7 @@
 
 .btn-compare {
   background: linear-gradient(135deg, #0F1630 0%, #131B3A 100%);
-  color: #FFFFFF;
+  color: var(--text);
   border: 1px solid rgba(201, 169, 97, 0.3);
 }
 
@@ -148,7 +148,7 @@
 
 .btn-secondary {
   background: rgba(0, 40, 85, 0.5);
-  color: #FFFFFF;
+  color: var(--text);
   border: 1px solid rgba(201, 169, 97, 0.25);
 }
 
@@ -160,7 +160,7 @@
 .btn-details {
   padding: 8px 16px;
   background: linear-gradient(135deg, #0F1630 0%, #131B3A 100%);
-  color: #FFFFFF;
+  color: var(--text);
   border: 1px solid rgba(201, 169, 97, 0.3);
   font-size: 12px;
 }
@@ -213,7 +213,7 @@
   background: linear-gradient(135deg, rgba(0, 24, 69, 0.9) 0%, rgba(0, 40, 85, 0.8) 100%);
   border: 1px solid rgba(201, 169, 97, 0.3);
   border-radius: 8px;
-  color: #FFFFFF;
+  color: var(--text);
   font-size: 14px;
   transition: all 0.2s ease;
 }
@@ -232,7 +232,7 @@
 }
 
 .search-input::placeholder {
-  color: #B8C5D6;
+  color: var(--muted);
   opacity: 0.6;
 }
 
@@ -241,7 +241,7 @@
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  color: #B8C5D6;
+  color: var(--muted);
   width: 18px;
   height: 18px;
 }
@@ -264,7 +264,7 @@
   background: linear-gradient(135deg, rgba(0, 24, 69, 0.9) 0%, rgba(0, 40, 85, 0.8) 100%);
   border: 1px solid rgba(201, 169, 97, 0.3);
   border-radius: 8px;
-  color: #FFFFFF;
+  color: var(--text);
   font-size: 14px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -284,12 +284,12 @@
 
 .sector-filter select option {
   background: #0F1630;
-  color: #FFFFFF;
+  color: var(--text);
 }
 
 .results-count {
   font-size: 14px;
-  color: #B8C5D6;
+  color: var(--muted);
   white-space: nowrap;
 }
 
@@ -327,7 +327,7 @@
 .customizer-header h3 {
   font-size: 18px;
   font-weight: 600;
-  color: #FFFFFF;
+  color: var(--text);
   margin: 0;
 }
 
@@ -372,7 +372,7 @@
 }
 
 .column-checkbox span {
-  color: #E8EDF3;
+  color: var(--text);
   font-size: 14px;
 }
 
@@ -400,7 +400,7 @@
 .sector-toggle {
   background: none;
   border: none;
-  color: #8C82FF;
+  color: var(--brand);
   font-size: 18px;
   cursor: pointer;
   padding: 4px;
@@ -413,7 +413,7 @@
 .sector-title {
   font-size: 18px;
   font-weight: 600;
-  color: #FFFFFF;
+  color: var(--text);
   margin: 0;
 }
 
@@ -437,7 +437,7 @@
   padding: 14px 16px;
   text-align: left;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text);
   text-transform: uppercase;
   font-size: 11px;
   letter-spacing: 0.8px;
@@ -456,7 +456,7 @@
 }
 
 .metrics-table th.sortable.active {
-  color: #8C82FF;
+  color: var(--brand);
 }
 
 .th-content {
@@ -467,7 +467,7 @@
 
 .sort-indicator {
   font-size: 10px;
-  color: #8C82FF;
+  color: var(--brand);
 }
 
 .compare-col,
@@ -491,7 +491,7 @@
 
 .metrics-table td {
   padding: 16px;
-  color: #E8EDF3;
+  color: var(--muted);
   vertical-align: middle;
 }
 
@@ -503,23 +503,23 @@
 .symbol-cell strong {
   font-size: 15px;
   font-weight: 600;
-  color: #FFFFFF;
+  color: var(--text);
 }
 
 .company-name {
   font-size: 13px;
-  color: #B8C5D6;
+  color: var(--muted);
 }
 
 .sector-cell {
   font-size: 12px;
-  color: #8C82FF;
+  color: var(--brand);
 }
 
 .price-cell {
   font-weight: 600;
   font-size: 15px;
-  color: #FFFFFF;
+  color: var(--text);
 }
 
 /* Positive/Negative Cells */
@@ -548,7 +548,7 @@
 .empty-state {
   text-align: center;
   padding: 60px 20px;
-  color: #B8C5D6;
+  color: var(--muted);
   font-size: 16px;
   background: linear-gradient(135deg, rgba(0, 24, 69, 0.8) 0%, rgba(0, 40, 85, 0.7) 100%);
   border: 1px solid rgba(201, 169, 97, 0.25);
@@ -563,7 +563,7 @@
 .loading {
   text-align: center;
   padding: 100px 20px;
-  color: #8C82FF;
+  color: var(--brand);
   font-size: 16px;
   font-weight: 500;
   letter-spacing: 0.5px;

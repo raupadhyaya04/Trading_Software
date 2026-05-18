@@ -4,8 +4,8 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="footer-inner">
-        <p className="footer-title">EuroPitch</p>
-        <p className="footer-text">© {year} EuroPitch. All rights reserved.</p>
+        <p className="footer-title">Elevatr</p>
+        <p className="footer-text">© {year} Elevatr. All rights reserved.</p>
         <p className="footer-subtext">
           Advancing European student investors — from stock pitching to market
           strategy.
@@ -15,7 +15,7 @@ function Footer() {
             href="https://www.linkedin.com/company/euro-pitch"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="EuroPitch on LinkedIn"
+            aria-label="Elevatr on LinkedIn"
             className="footer-social-link"
             style={{ marginRight: 12, color: "inherit" }}
           >
@@ -36,7 +36,7 @@ function Footer() {
             href="https://www.instagram.com/euro.pitch"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="EuroPitch on Instagram"
+            aria-label="Elevatr on Instagram"
             className="footer-social-link"
             style={{ color: "inherit" }}
           >

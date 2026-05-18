@@ -114,13 +114,14 @@ export default function Dashboard() {
     { date: string; pnl: number }[]
   >([]);
   const [recentTrades, setRecentTrades] = useState<any[]>([]);
+  const [recentTradesPage, setRecentTradesPage] = useState(1);
   const { session, loading: authLoading } = useAuth();
   const { watchlist: contextWatchlist, removeFromWatchlist } = useWatchlist();
   const [watchlist, setWatchlist] = useState<string[]>([]);
   const { setCompetitionScore: setContextCompetitionScore } =
     useCompetitionScore();
   const navigate = useNavigate();
-  const priceIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const priceIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isFetchingPricesRef = useRef(false);
   const hasInitializedRef = useRef(false);
   const lastKnownPricesRef = useRef<Map<string, number>>(new Map());
@@ -409,6 +410,17 @@ export default function Dashboard() {
 
   const formatPercent = (value: number) =>
     `${value >= 0 ? "+" : ""}${value.toFixed(2)}%`;
+
+  const tradesPerPage = 10;
+  const totalRecentTradePages = Math.max(
+    1,
+    Math.ceil(recentTrades.length / tradesPerPage),
+  );
+  const recentTradesStartIndex = (recentTradesPage - 1) * tradesPerPage;
+  const visibleRecentTrades = recentTrades.slice(
+    recentTradesStartIndex,
+    recentTradesStartIndex + tradesPerPage,
+  );
 
   /**
    * Fetch news from the news microservice API
@@ -1283,13 +1295,14 @@ export default function Dashboard() {
         if (fetchError) throw fetchError;
         const trades = tradesData ?? [];
 
-        // Extract 10 most recent trades for display
+        // Keep all trades for the history table, sorted newest-first for display
         const sortedTrades = [...trades].sort(
           (a, b) =>
             new Date(b.placed_at ?? 0).getTime() -
             new Date(a.placed_at ?? 0).getTime(),
         );
-        setRecentTrades(sortedTrades.slice(0, 10));
+        setRecentTrades(sortedTrades);
+        setRecentTradesPage(1);
 
         const symbolNameMap = new Map<string, string>();
         const positionsMap = new Map<string, any>();
@@ -2111,7 +2124,7 @@ export default function Dashboard() {
                   <Line
                     type="monotone"
                     dataKey="pnl"
-                    stroke="var(--brand, #8C82FF)"
+                    stroke="var(--brand, #00bf63)"
                     strokeWidth={2}
                     dot={false}
                     activeDot={{ r: 5 }}
@@ -2197,14 +2210,14 @@ export default function Dashboard() {
                             key={`cell-${index}`}
                             fill={
                               [
-                                "#8C82FF",
-                                "#6b6bff",
-                                "#a99dff",
-                                "#4a4aff",
-                                "#8b5cf6",
-                                "#c4b5fd",
-                                "#7b70ff",
-                                "#9d91ff",
+                                "#00bf63",
+                                "#009f54",
+                                "#66d89e",
+                                "#3fbf6b",
+                                "#2ea86b",
+                                "#9fe6c6",
+                                "#56c77f",
+                                "#7adfaa",
                               ][index % 8]
                             }
                           />
@@ -2376,94 +2389,151 @@ export default function Dashboard() {
 
           {/* Recent Trades Section */}
           <div className="trading-stats-section">
-            <h2>Recent Trades</h2>
+            <div className="section-header-with-count">
+              <h2>Recent Trades</h2>
+              <span className="section-count">{recentTrades.length} total</span>
+            </div>
 
             {recentTrades.length > 0 ? (
-              <div className="table-container">
-                <table className="positions-table">
-                  <thead>
-                    <tr>
-                      <th>Date/Time</th>
-                      <th>Symbol</th>
-                      <th>Side</th>
-                      <th>Quantity</th>
-                      <th>Price</th>
-                      <th>Total Value</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {recentTrades.map((trade, idx) => {
-                      const side = (trade.side ?? "buy").toLowerCase();
-                      const notional = Number(
-                        trade.notional ??
-                          Number(trade.quantity ?? 0) *
-                            Number(trade.price ?? 0),
-                      );
-                      const tradeDate = new Date(
-                        trade.placed_at ?? trade.filled_at ?? new Date(),
-                      );
+              <>
+                <div className="table-container">
+                  <table className="positions-table">
+                    <thead>
+                      <tr>
+                        <th>Date/Time</th>
+                        <th>Symbol</th>
+                        <th>Side</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total Value</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {visibleRecentTrades.map((trade, idx) => {
+                        const side = (trade.side ?? "buy").toLowerCase();
+                        const notional = Number(
+                          trade.notional ??
+                            Number(trade.quantity ?? 0) *
+                              Number(trade.price ?? 0),
+                        );
+                        const tradeDate = new Date(
+                          trade.placed_at ?? trade.filled_at ?? new Date(),
+                        );
 
-                      return (
-                        <tr key={`${trade.id}-${idx}`}>
-                          <td>
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: "4px",
-                              }}
-                            >
-                              <span style={{ fontWeight: 600 }}>
-                                {tradeDate.toLocaleDateString("en-GB", {
-                                  day: "2-digit",
-                                  month: "short",
-                                  year: "numeric",
-                                })}
-                              </span>
-                              <span
+                        return (
+                          <tr
+                            key={`${trade.id}-${recentTradesStartIndex + idx}`}
+                          >
+                            <td>
+                              <div
                                 style={{
-                                  fontSize: "0.85rem",
-                                  color: "#9aa3b2",
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  gap: "4px",
                                 }}
                               >
-                                {tradeDate.toLocaleTimeString("en-GB", {
-                                  hour: "2-digit",
-                                  minute: "2-digit",
-                                })}
+                                <span style={{ fontWeight: 600 }}>
+                                  {tradeDate.toLocaleDateString("en-GB", {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric",
+                                  })}
+                                </span>
+                                <span
+                                  style={{
+                                    fontSize: "0.85rem",
+                                    color: "var(--muted)",
+                                  }}
+                                >
+                                  {tradeDate.toLocaleTimeString("en-GB", {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                  })}
+                                </span>
+                              </div>
+                            </td>
+                            <td>
+                              <strong style={{ color: "var(--text)" }}>
+                                {trade.symbol}
+                              </strong>
+                            </td>
+                            <td>
+                              <span
+                                className={`position-badge ${side === "buy" ? "long" : "short"}`}
+                              >
+                                {side}
                               </span>
-                            </div>
-                          </td>
-                          <td>
-                            <strong style={{ color: "#FFFFFF" }}>
-                              {trade.symbol}
-                            </strong>
-                          </td>
-                          <td>
-                            <span
-                              className={`position-badge ${side === "buy" ? "long" : "short"}`}
-                            >
-                              {side}
-                            </span>
-                          </td>
-                          <td>
-                            {Number(trade.quantity ?? 0).toLocaleString(
-                              "en-US",
-                              {
-                                minimumFractionDigits: 0,
-                                maximumFractionDigits: 2,
-                              },
-                            )}
-                          </td>
-                          <td>{formatCurrency(Number(trade.price ?? 0))}</td>
-                          <td style={{ fontWeight: 600 }}>
-                            {formatCurrency(notional)}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
+                            </td>
+                            <td>
+                              {Number(trade.quantity ?? 0).toLocaleString(
+                                "en-US",
+                                {
+                                  minimumFractionDigits: 0,
+                                  maximumFractionDigits: 2,
+                                },
+                              )}
+                            </td>
+                            <td>{formatCurrency(Number(trade.price ?? 0))}</td>
+                            <td style={{ fontWeight: 600 }}>
+                              {formatCurrency(notional)}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+
+                {totalRecentTradePages > 1 && (
+                  <div
+                    className="pagination-bar"
+                    aria-label="Recent trades pages"
+                  >
+                    <button
+                      type="button"
+                      className="pagination-nav"
+                      onClick={() =>
+                        setRecentTradesPage((page) => Math.max(1, page - 1))
+                      }
+                      disabled={recentTradesPage === 1}
+                    >
+                      Prev
+                    </button>
+
+                    <div className="pagination-pages">
+                      {Array.from(
+                        { length: totalRecentTradePages },
+                        (_, i) => i + 1,
+                      ).map((page) => (
+                        <button
+                          key={page}
+                          type="button"
+                          className={`pagination-page ${page === recentTradesPage ? "active" : ""}`}
+                          onClick={() => setRecentTradesPage(page)}
+                          aria-current={
+                            page === recentTradesPage ? "page" : undefined
+                          }
+                        >
+                          {page}
+                        </button>
+                      ))}
+                    </div>
+
+                    <button
+                      type="button"
+                      className="pagination-nav"
+                      onClick={() =>
+                        setRecentTradesPage((page) =>
+                          Math.min(totalRecentTradePages, page + 1),
+                        )
+                      }
+                      disabled={recentTradesPage === totalRecentTradePages}
+                    >
+                      Next
+                    </button>
+                  </div>
+                )}
+              </>
             ) : (
               <div className="empty-state">
                 <p>No trades yet. Start trading to see your history here.</p>

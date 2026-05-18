@@ -197,8 +197,8 @@
 }
 
 .tab-button.active {
-  color: #8C82FF;
-  border-bottom-color: #8C82FF;
+  color: var(--brand);
+  border-bottom-color: var(--brand);
 }
 
 .modal-body {
@@ -324,7 +324,7 @@
 
 .toggle-button.active {
   background: linear-gradient(135deg, #0F1630 0%, #131B3A 100%);
-  border-color: #8C82FF;
+  border-color: var(--brand);
   color: white;
 }
 
@@ -353,7 +353,7 @@
 
 .trade-input:focus {
   outline: none;
-  border-color: #8C82FF;
+  border-color: var(--brand);
   background: rgba(0, 40, 85, 0.5);
   box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.1);
 }
@@ -399,7 +399,7 @@
 }
 
 .trade-summary .summary-row.total span:last-child {
-  color: #8C82FF;
+  color: var(--brand);
   font-size: 18px;
 }
 
@@ -463,8 +463,8 @@
 
 .watchlist-btn.watched {
   background: rgba(201, 169, 97, 0.2);
-  border-color: #8C82FF;
-  color: #8C82FF;
+  border-color: var(--brand);
+  color: var(--brand);
 }
 
 .watchlist-btn.watched:hover {
@@ -497,7 +497,7 @@
 .btn-trade-primary {
   flex: 1;
   padding: 16px 32px;
-  background: linear-gradient(135deg, #8C82FF 0%, #a99dff 100%);
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
   border: none;
   border-radius: 8px;
   color: #001428;
@@ -513,7 +513,7 @@
 .btn-trade-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(201, 169, 97, 0.6);
-  background: linear-gradient(135deg, #a99dff 0%, #8C82FF 100%);
+  background: linear-gradient(135deg, var(--brand-2) 0%, var(--brand) 100%);
 }
 
 .btn-watchlist {
@@ -536,8 +536,8 @@
 
 .btn-watchlist.watched {
   background: rgba(201, 169, 97, 0.2);
-  border-color: #8C82FF;
-  color: #8C82FF;
+  border-color: var(--brand);
+  color: var(--brand);
 }
 
 .btn-watchlist.watched:hover {

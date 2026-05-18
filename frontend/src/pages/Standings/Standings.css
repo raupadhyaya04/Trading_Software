@@ -115,7 +115,7 @@
 .timeframe-btn.active {
   background: linear-gradient(135deg, #0F1630 0%, #131B3A 100%);
   color: white;
-  box-shadow: 0 2px 8px rgba(140, 130, 255, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 191, 99, 0.4);
 }
 
 /* Podium Section - ORIGINAL GOLD/SILVER/BRONZE COLORS */
@@ -233,7 +233,7 @@
   font-size: 28px;
   font-weight: 700;
   margin: 0 auto 12px;
-  border: 2px solid rgba(140, 130, 255, 0.3);
+  border: 2px solid rgba(0, 191, 99, 0.3);
 }
 
 .podium-user h3 {
@@ -326,7 +326,7 @@
 
 .standings-table thead {
   background: linear-gradient(135deg, #0F1630 0%, #131B3A 100%);
-  border-bottom: 2px solid rgba(140, 130, 255, 0.4);
+  border-bottom: 2px solid rgba(0, 191, 99, 0.4);
 }
 
 .standings-table th {
@@ -445,8 +445,8 @@
 }
 
 .you-badge {
-  background: #8C82FF;
-  color: #0a0a2a;
+  background: var(--brand);
+  color: var(--bg);
   padding: 4px 10px;
   border-radius: 12px;
   font-size: 11px;
@@ -613,8 +613,8 @@
 .podium-score {
   font-size: 32px;
   font-weight: 800;
-  color: #8C82FF;
-  text-shadow: 0 2px 6px rgba(140, 130, 255, 0.5);
+  color: var(--brand);
+  text-shadow: 0 2px 6px rgba(0, 191, 99, 0.5);
 }
 
 /* Score Breakdown Legend */
@@ -622,9 +622,9 @@
   margin: 32px 0;
   padding: 24px;
   background: linear-gradient(135deg, rgba(15, 22, 48, 0.8) 0%, rgba(19, 27, 58, 0.7) 100%);
-  border: 1px solid rgba(140, 130, 255, 0.25);
+  border: 1px solid rgba(0, 191, 99, 0.25);
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(140, 130, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 191, 99, 0.3);
 }
 
 .score-breakdown-legend h3 {
@@ -654,8 +654,8 @@
   justify-content: center;
   min-width: 45px;
   padding: 6px 10px;
-  background: linear-gradient(135deg, #8C82FF 0%, #7b70ff 100%);
-  color: #0a0a2a;
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+  color: var(--bg);
   font-weight: 700;
   font-size: 14px;
   border-radius: 6px;

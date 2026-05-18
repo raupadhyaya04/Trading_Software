@@ -97,7 +97,7 @@ export default function Signup() {
         <div className="auth-card society-card">
           <div className="auth-header">
             <div className="auth-logo">
-              <h1>EuroPitch Portfolio Challenge</h1>
+              <h1>Elevatr - Learn Equity Investing</h1>
             </div>
             <h2>Register Your Society</h2>
             <p>
